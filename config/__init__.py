@@ -15,10 +15,8 @@ class ServerSettings(BaseSettings):
 
 
 class DatabaseSettings(BaseSettings):
-    # DB_URL: str = os.getenv('DB_URL')
-    # DB_NAME: str = os.getenv('DB_NAME')
-    DB_URL: str = "mongodb+srv://pradjones:Visagio2020!@cluster0.jwkit.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-    DB_NAME: str = "Nelpee"
+    DB_URL: str = os.getenv('DB_URL')
+    DB_NAME: str = os.getenv('DB_NAME')
 
 
 
