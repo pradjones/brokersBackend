@@ -30,7 +30,7 @@ def get_user(*, user_id: int, db: Session = Depends(deps.get_db)) -> Any:
     return user_info
 
 @router.put("/users/{user_id}", response_description="Update user details")
-def update_task(*, user_id: int, db: Session = Depends(deps.get_db), user_in: UserUpdate = Body(...)):
+def update_user(*, user_id: int, db: Session = Depends(deps.get_db), user_in: UserUpdate = Body(...)):
     user_in = jsonable_encoder(user_in)
     if len(user_in) >= 1:
         curr_user = user.get(db=db, id=user_id)
