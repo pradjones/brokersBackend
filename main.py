@@ -5,25 +5,34 @@ from config import settings
 
 from apps.routers.repository import router as repository_router
 from apps.routers.jobs import router as jobs_router
+from apps.routers.policies import router as policies_router
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.on_event("startup")
 async def startup_db_client():
-    # app.mongodb_client = AsyncIOMotorClient(settings.DB_URL)
-    # app.mongodb = app.mongodb_client[settings.DB_NAME]
     pass
 
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
-    # app.mongodb_client.close()
     pass
 
 
 app.include_router(repository_router, tags=["Repositories"], prefix="")
 app.include_router(jobs_router, tags=["Jobs"], prefix="")
+app.include_router(policies_router, tags=["Policies"], prefix="")
 
 
 if __name__ == "__main__":
