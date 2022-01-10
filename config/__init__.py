@@ -16,7 +16,7 @@ class ServerSettings(BaseSettings):
 
 class DatabaseSettings(BaseSettings):
     DB_URL: str = os.getenv('DB_URL')
-    DB_NAME: str = os.getenv('DB_NAME')
+    DB_USER: str = os.getenv("USER_EMAIL")
 
 
 

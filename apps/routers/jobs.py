@@ -41,7 +41,7 @@ async def get_job(id: str):
     
     return job_info
 
-@router.get("/job/{id}/result", response_description="Get Job Info")
+@router.get("/job/{id}/result", response_description="Get Job Results")
 async def get_result(id: str):
     path = HOST+'/job/'+id+'/result'
     request_result = requests.get(path, headers=headers)
