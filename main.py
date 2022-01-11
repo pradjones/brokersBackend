@@ -5,6 +5,8 @@ from config import settings
 from apps.routers.repository import router as repository_router
 from apps.routers.jobs import router as jobs_router
 from apps.routers.users import router as users_router
+from apps.routers.sales import router as sales_router
+from apps.routers.suggestions import router as suggestions_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -32,6 +34,8 @@ async def shutdown_db_client():
 app.include_router(repository_router, tags=["Repositories"], prefix="")
 app.include_router(jobs_router, tags=["Jobs"], prefix="")
 app.include_router(users_router, tags=["Users"], prefix="")
+app.include_router(sales_router, tags=["Sales"], prefix="")
+app.include_router(suggestions_router, tags=["Suggestions"], prefix="")
 
 
 if __name__ == "__main__":
