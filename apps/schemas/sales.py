@@ -1,15 +1,15 @@
 from typing import Optional
 from pydantic import BaseModel
-from datetime import date
+from datetime import datetime
 
 class SalesBase(BaseModel):
     quoteAmount: Optional[float] = None 
     policyType: Optional[str]
     clientOrganisation: Optional[str] = None 
     agent: Optional[str] = None 
-    conversionDate: Optional[date]
-    quotationDate: Optional[date] = None 
-    expiryDate: Optional[date]
+    conversionDate: Optional[datetime]
+    quotationDate: Optional[datetime] = None 
+    expiryDate: Optional[datetime]
     flag: Optional[bool]
     policyName: Optional[str]
     company: Optional[str]
@@ -18,7 +18,7 @@ class SalesCreate(SalesBase):
     quoteAmount: float
     clientOrganisation: str
     agent: str
-    quotationDate: date
+    quotationDate: datetime
 
 class SalesUpdate(SalesBase):
     pass

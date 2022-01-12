@@ -32,8 +32,13 @@ def update_sale(*, sales_id: int, db: Session = Depends(deps.get_db), sales_in: 
         if not curr_sale:
             raise HTTPException(status_code=404, detail=f"Sale with id {sales_id} not found")
 
+        # Prevent unchanged values from becoming null
+        for key in sales_in:
+            if sales_in[key] is None:
+                sales_in[key] = getattr(curr_sale, key)
+
         updated_sale = sales.update(db=db, db_obj=curr_sale, obj_in=sales_in)
-        return update_sale
+        return updated_sale
     
     raise HTTPException(status_code=400, detail=f"Invalid sales information")
 

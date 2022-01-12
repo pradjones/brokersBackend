@@ -1,4 +1,4 @@
-from sqlalchemy import String, Column, Boolean, Float, Integer, Date
+from sqlalchemy import String, Column, Boolean, Float, Integer, DateTime
 from sqlalchemy.orm import relationship
 
 from apps.db.base_class import Base
@@ -9,9 +9,9 @@ class Sales(Base):
     policyType = Column(String(256), nullable=True)
     clientOrganisation = Column(String(256), nullable=True)
     agent = Column(String(256), nullable=True)
-    conversionDate = Column(Date, nullable=True)
-    quotationDate = Column(Date, nullable=True)
-    expiryDate = Column(Date, nullable=True)
+    conversionDate = Column(DateTime, nullable=True)
+    quotationDate = Column(DateTime, nullable=True)
+    expiryDate = Column(DateTime, nullable=True)
     flag = Column(Boolean, nullable=True)
     policyName = Column(String(256), nullable=True)
     company = Column(String(256), nullable=True)

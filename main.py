@@ -7,6 +7,8 @@ from apps.routers.jobs import router as jobs_router
 from apps.routers.users import router as users_router
 from apps.routers.sales import router as sales_router
 from apps.routers.suggestions import router as suggestions_router
+from apps.routers.policies import router as policies_router
+from apps.routers.agents import router as agents_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -30,13 +32,13 @@ async def startup_db_client():
 async def shutdown_db_client():
     pass
 
-
-app.include_router(repository_router, tags=["Repositories"], prefix=settings.API_VERSION)
-app.include_router(jobs_router, tags=["Jobs"], prefix=settings.API_VERSION)
-app.include_router(users_router, tags=["Users"], prefix=settings.API_VERSION)
-app.include_router(sales_router, tags=["Sales"], prefix=settings.API_VERSION)
-app.include_router(suggestions_router, tags=["Suggestions"], prefix=settings.API_VERSION)
-
+app.include_router(repository_router, tags=["Repositories"], prefix="")
+app.include_router(jobs_router, tags=["Jobs"], prefix="")
+app.include_router(users_router, tags=["Users"], prefix="")
+app.include_router(sales_router, tags=["Sales"], prefix="")
+app.include_router(suggestions_router, tags=["Suggestions"], prefix="")
+app.include_router(policies_router, tags=["Policies"], prefix="")
+app.include_router(agents_router, tags=["Agents"], prefix="")
 
 if __name__ == "__main__":
     uvicorn.run(

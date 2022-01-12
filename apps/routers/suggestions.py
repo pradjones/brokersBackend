@@ -1,12 +1,11 @@
 from typing import Any, List
-from fastapi import APIRouter, Body, Query, HTTPException, Request, Depends 
+from fastapi import APIRouter, Body, HTTPException, Request, Depends 
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 import json
 
 from apps.crud import suggestions
 from apps.schemas.suggestions import SuggestionsInDBBase, SuggestionsCreate, SuggestionsUpdate
-from apps.schemas.user import UserInDBBase
 
 import dependencies as deps
 
@@ -34,6 +33,7 @@ def update_suggestion(*, suggestions_id: int, db: Session = Depends(deps.get_db)
         if not curr_suggestion:
             raise HTTPException(status_code=404, detail=f"Suggestion with id {suggestions_id} not found")
 
+        # Prevent unchanged values from becoming null
         for key in suggestions_in:
             if suggestions_in[key] is None:
                 suggestions_in[key] = getattr(curr_suggestion, key)
