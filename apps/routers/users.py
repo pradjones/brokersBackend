@@ -43,7 +43,7 @@ def update_user(*, user_id: int, db: Session = Depends(deps.get_db), user_in: Us
 
 @router.post("/users/", response_description="New user details")
 def create_user(*, db: Session = Depends(deps.get_db), user_in: UserCreate = Body(...)):
-    # check validity of user_in
+    # check if user with the email already exists
     if user.get_by_email(db=db, email=user_in.email):
         return f"User with this email already exists"
 
@@ -60,4 +60,3 @@ def remove_user(*, user_id: int, db: Session = Depends(deps.get_db)):
         return f"User with id {user_id} not found"
     
     return user_info
-

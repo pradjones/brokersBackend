@@ -22,6 +22,9 @@ class DatabaseSettings(BaseSettings):
 
 class Settings(CommonSettings, ServerSettings, DatabaseSettings):
     API_VERSION: str = "/api/v1"
+    JWT_SECRET: str = "TEST_SECRET_DO_NOT_USE_IN_PRODUCTION"
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7 # Expire in 7 days
 
 
 settings = Settings()
