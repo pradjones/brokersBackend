@@ -31,11 +31,11 @@ async def shutdown_db_client():
     pass
 
 
-app.include_router(repository_router, tags=["Repositories"], prefix="")
-app.include_router(jobs_router, tags=["Jobs"], prefix="")
-app.include_router(users_router, tags=["Users"], prefix="")
-app.include_router(sales_router, tags=["Sales"], prefix="")
-app.include_router(suggestions_router, tags=["Suggestions"], prefix="")
+app.include_router(repository_router, tags=["Repositories"], prefix=settings.API_VERSION)
+app.include_router(jobs_router, tags=["Jobs"], prefix=settings.API_VERSION)
+app.include_router(users_router, tags=["Users"], prefix=settings.API_VERSION)
+app.include_router(sales_router, tags=["Sales"], prefix=settings.API_VERSION)
+app.include_router(suggestions_router, tags=["Suggestions"], prefix=settings.API_VERSION)
 
 
 if __name__ == "__main__":

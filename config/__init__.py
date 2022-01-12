@@ -21,7 +21,7 @@ class DatabaseSettings(BaseSettings):
 
 
 class Settings(CommonSettings, ServerSettings, DatabaseSettings):
-    pass
+    API_VERSION: str = "/api/v1"
 
 
 settings = Settings()
