@@ -4,20 +4,18 @@ from datetime import datetime
 
 class SalesBase(BaseModel):
     quoteAmount: Optional[float] = None 
-    policyType: Optional[str]
-    clientOrganisation: Optional[str] = None 
-    agent: Optional[str] = None 
     conversionDate: Optional[datetime]
     quotationDate: Optional[datetime] = None 
     expiryDate: Optional[datetime]
     flag: Optional[bool]
-    policyName: Optional[str]
-    company: Optional[str]
+    policyId: Optional[int]
+    agentId: Optional[int] = None
+    clientId: Optional[int] = None
 
 class SalesCreate(SalesBase):
     quoteAmount: float
-    clientOrganisation: str
-    agent: str
+    clientId: int
+    agentId: int
     quotationDate: datetime
 
 class SalesUpdate(SalesBase):

@@ -41,7 +41,7 @@ def update_user(*, user_id: int, db: Session = Depends(deps.get_db), user_in: Us
     
     raise HTTPException(status_code=400, detail=f"Invalid user information")
 
-@router.post("/users/", response_description="New user details")
+@router.post("/users", response_description="New user details")
 def create_user(*, db: Session = Depends(deps.get_db), user_in: UserCreate = Body(...)):
     # check if user with the email already exists
     if user.get_by_email(db=db, email=user_in.email):

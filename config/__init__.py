@@ -17,6 +17,8 @@ class ServerSettings(BaseSettings):
 class DatabaseSettings(BaseSettings):
     DB_URL: str = os.getenv('DB_URL')
     DB_USER: str = os.getenv("USER_EMAIL")
+    SPACES_PUBLIC_KEY: str = os.getenv("PUBLIC_KEY")
+    SPACES_SECRET_KEY: str = os.getenv("SECRET_KEY")
 
 
 

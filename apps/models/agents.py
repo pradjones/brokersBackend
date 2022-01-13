@@ -10,3 +10,5 @@ class Agents(Base):
     position = Column(String(256), nullable=True)
     managerId = Column(Integer, nullable=True)
     joinDate = Column(DateTime, nullable=True)
+
+    children = relationship("Sales")

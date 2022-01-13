@@ -4,6 +4,8 @@ from fastapi import Depends, HTTPException, status
 from jose import jwt, JWTError
 from pydantic import BaseModel
 from sqlalchemy.orm.session import Session
+import boto3
+from botocore.client import Config
 
 from apps.core.auth import oauth2_scheme
 from apps.db.session import SessionLocal
@@ -20,6 +22,14 @@ def get_db() -> Generator:
         yield db
     finally:
         db.close()
+
+def get_spaces():
+    session = boto3.session.Session()
+    client = session.client("s3",
+        region_name="sgp1",
+        endpoint_url="https://sgp1.digitaloceanspaces.com",
+        aws_access_key_id=settings.SPACES_PUBLIC_KEY,
+        aws_secret_access_key=settings.SPACES_SECRET_KEY)
 
 def get_current_user(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)) -> User:
     credentials_exception = HTTPException(
