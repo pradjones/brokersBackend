@@ -2,7 +2,8 @@ from typing import Any, List
 from fastapi import APIRouter, Body, APIRouter, Query, HTTPException, Request, Depends
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
-import json 
+import json
+from apps import routers 
 
 from apps.crud import user
 from apps.schemas.user import UserInDBBase, UserUpdate, UserCreate
@@ -24,7 +25,7 @@ def get_user(*, user_id: int, db: Session = Depends(deps.get_db)) -> Any:
     user_info = user.get(db=db, id=user_id)
 
     if not user_info:
-        raise HTTPException(status_code=404, detail=f"User with ID {user_id} was not found")
+        raise HTTPException(status_code=404, detail=f"User with id {user_id} not found")
     
     return user_info
 
@@ -36,6 +37,11 @@ def update_user(*, user_id: int, db: Session = Depends(deps.get_db), user_in: Us
         if not curr_user:
             raise HTTPException(status_code=404, detail=f"User with id {user_id} not found")
 
+        # Prevent unchanged values from becoming null
+        for key in user_in:
+            if user_in[key] is None:
+                user_in[key] = getattr(curr_user, key)
+
         updated_user = user.update(db=db, db_obj=curr_user,obj_in=user_in)
         return updated_user
     
@@ -45,18 +51,18 @@ def update_user(*, user_id: int, db: Session = Depends(deps.get_db), user_in: Us
 def create_user(*, db: Session = Depends(deps.get_db), user_in: UserCreate = Body(...)):
     # check if user with the email already exists
     if user.get_by_email(db=db, email=user_in.email):
-        return f"User with this email already exists"
+        raise HTTPException(status_code=400, detail="User with this email already exists")
 
     new_user = user.create(db=db, obj_in=user_in)
     return new_user
 
-@router.delete("/users/{user.id}", response_description="Deleted user information")
+@router.delete("/users/{user_id}", response_description="Deleted user information")
 def remove_user(*, user_id: int, db: Session = Depends(deps.get_db)):
     user_info = user.get(db=db, id=user_id)
     # Check user with the given id exists
     if user_info:
         user.remove(db=db, id=user_id)
     else: 
-        return f"User with id {user_id} not found"
+        raise HTTPException(status_code=404, detail=f"User with id {user_id} not found")
     
     return user_info

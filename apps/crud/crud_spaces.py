@@ -42,18 +42,23 @@ class CRUDSpaces(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     def create_file(self, client, space_name: str, location: str, upload_name: Optional[str] = None):
         if upload_name is None:
             upload_name = Path(location).name
+
+        # Get the extension of the file
+        extension = Path(location).suffix
             
-        client.upload_file(location, space_name, upload_name)
+        client.upload_file(location, space_name, upload_name, ExtraArgs={"Metadata": {"file_extension":f"{extension}"}})
 
     # upload multiple files to a space
     def create_file(self, client, space_name: str, location: list[str]):
         for loc in location:
             upload_name = Path(location).name
-            client.upload_file(loc, space_name, upload_name)
+            extension = Path(location).suffix
+            client.upload_file(loc, space_name, upload_name, ExtraArgs={"Metadata": {"file_extension":f"{extension}"}})
 
     # update file 
     def update_file(self, client, space_name: str, location: str, file_name: str, new_name: Optional[str] = None):
-        client.upload_file(location, space_name, file_name) # update file 
+        extension = Path(location).suffix
+        client.upload_file(location, space_name, file_name, ExtraArgs={"Metadata": {"file_extension":f"{extension}"}}) # update file 
         if new_name is not None:
             # copy to a new name and delete old file
             client.copy_object(Bucket=space_name, CopySource=f"{space_name}/{file_name}", Key=new_name)
