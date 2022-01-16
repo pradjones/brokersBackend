@@ -22,7 +22,7 @@ python-dotenv==0.14.0
 pyyaml==5.4
 regex
 six==1.15.0
-starlette==0.13.6
+starlette
 toml==0.10.1
 typed-ast
 typing-extensions==3.7.4.3
